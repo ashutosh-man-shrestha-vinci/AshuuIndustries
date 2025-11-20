@@ -1,8 +1,24 @@
 services:
+  # Backend Java Spring Boot
   - type: web
     name: reservation-api
+    branch: main
     rootDir: reservation-api
-    env: java
-    buildCommand: "./mvnw clean package"
-    startCommand: "java -jar target/*.jar"
-    plan: free
+    buildCommand: ./mvnw clean package
+    startCommand: java -jar target/*.jar
+    envVars:
+      - key: JAVA_HOME
+        value: /usr/local/openjdk-17  # adapte selon la version utilisée
+      - key: SPRING_MAIL_USERNAME
+        value: ""  # La vraie valeur doit être définie dans le dashboard Render (sécurisé)
+      - key: SPRING_MAIL_PASSWORD
+        value: ""  # La vraie valeur doit être définie dans le dashboard Render (sécurisé)
+
+  # Frontend TypeScript (par exemple React)
+  - type: web
+    name: reservation-frontend
+    branch: main
+    rootDir: reservation-frontend
+    buildCommand: yarn; yarn build  # ou npm install; npm run build selon ton setup
+    staticPublishPath: ./build
+g
